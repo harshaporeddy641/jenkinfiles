@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage ('cleanup') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/java-app']],  userRemoteConfigs: [[url: 'https://github.com/AneesRavidKhan/gms.git']])
+            }
+        }
+    stage('Build') {
+        steps {
+            sh 'mvn package'
+        }
+    }    
+    }
+}
